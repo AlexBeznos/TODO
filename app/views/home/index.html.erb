@@ -1,2 +1,10 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div ng-controller="TasksCtrl as tasksCont">
+	<h1>Tasks</h1>
+	<p ng-repeat="task in tasksCont.tasks">{{task.task}} - {{task.status}} - <button ng-click="tasksCont.removeTask(task)">Delete</button></p>
+
+	<form name="taskAdding" ng-submit="tasksCont.addTask()" novalidate>
+        <cite>{{tasksCont.myTask.task}}</cite>
+		<input type="text" ng-model="tasksCont.myTask.task" placeholder="Write a new task..." required />
+		<input type="submit"/>
+    </form>
+</div>
