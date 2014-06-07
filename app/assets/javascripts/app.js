@@ -1,33 +1,42 @@
 (function(){
   var app = angular.module('Todo', []);
-  app.controller('TasksCtrl', function(){
-     this.tasks = taskArr;
-     this.myTask = {};
-     this.addTask = function(){
-       this.myTask.status = false;
-       this.tasks.push(this.myTask);
-       this.myTask = {};
+
+  app.controller('TaskListCtrl', function(){
+    this.taskLists = taskArr;
+    this.newTaskList = {};
+    this.addTaskList = function() {
+      this.newTaskList.tasks = [];
+      this.taskLists.push(this.newTaskList);
+      this.newTaskList = {};
+    };
+    this.removeTaskList = function(list) {
+       this.taskLists.splice(this.taskLists.indexOf(list), 1);
      };
-     this.removeTask = function(task) {
-       this.tasks.splice(this.tasks.indexOf(task), 1);
-     };
-  }); 
+    this.removeTask = function(task, list) {
+      var listIndex = this.taskLists.indexOf(list);
+      var taskIndex = this.taskLists[listIndex].tasks.indexOf(task);
+      this.taskLists[listIndex].tasks.splice(taskIndex, 1);
+    };
+  });
 
 var taskArr = [{
-	task: "Buy milk",
-	status: false
-},
-{
-	task: "Create something greate!",
-	status: false
-},
-{
-	task: "Find a new job!",
-	status: true
-},
-{
-	task: "Buy a new phone",
-	status: false
+    name: "homeWork",
+    tasks: [{
+	    description: "Buy milk",
+	    status: false
+      }, {
+	    description: "Create something greate!",
+	    status: false
+      }]
+  }, {
+    name: "workWork",
+    tasks: [{
+	    description: "Find a new job!",
+	    status: true
+    }, {
+	    description: "Buy a new phone",
+	    status: false
+  }]
 }];
 
 }) ();

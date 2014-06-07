@@ -1,10 +1,13 @@
-<div ng-controller="TasksCtrl as tasksCont">
+<div ng-controller="TaskListCtrl as lists">
 	<h1>Tasks</h1>
-	<p ng-repeat="task in tasksCont.tasks">{{task.task}} - {{task.status}} - <button ng-click="tasksCont.removeTask(task)">Delete</button></p>
+	<div ng-repeat="list in lists.taskLists">
+	  <p>{{list.name}} - <button ng-click="lists.removeTaskList(list)">Delete</button></p>
+	  <div ng-repeat="task in list.tasks">{{task.description}} - {{task.status}} - <button ng-click="lists.removeTask(task, list)">remove</button></div>    
+	</div>
 
-	<form name="taskAdding" ng-submit="tasksCont.addTask()" novalidate>
-        <cite>{{tasksCont.myTask.task}}</cite>
-		<input type="text" ng-model="tasksCont.myTask.task" placeholder="Write a new task..." required />
+	<form name="taskAdding" ng-submit="lists.addTaskList()" novalidate>
+        <cite>{{lists.newTaskList.name}}</cite><br>
+		<input type="text" ng-model="lists.newTaskList.name" placeholder="Write a new task list..." required />
 		<input type="submit"/>
     </form>
 </div>
