@@ -2,7 +2,12 @@
 	<h1>Tasks</h1>
 	<div ng-repeat="list in lists.taskLists">
 	  <p>{{list.name}} - <button ng-click="lists.removeTaskList(list)">Delete</button></p>
-	  <div ng-repeat="task in list.tasks">{{task.description}} - {{task.status}} - <button ng-click="lists.removeTask(task, list)">remove</button></div>    
+	  <div ng-repeat="task in list.tasks">
+	  	<form ng-submit="lists.check(task.list)">
+	  		<input type="checkbox" ng-model="task.status"/>
+	  	</form>
+	  	<span ng-class="{crossed: task.status}">{{task.description}}</span> - {{task.status}} - <button ng-click="lists.removeTask(task, list)">remove</button>
+	  </div>    
 	</div>
 
 	<form name="taskAdding" ng-submit="lists.addTaskList()" novalidate>
