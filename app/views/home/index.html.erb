@@ -7,7 +7,11 @@
 	  		<input type="checkbox" ng-model="task.status"/>
 	  	</form>
 	  	<span ng-class="{crossed: task.status}">{{task.description}}</span> - {{task.status}} - <button ng-click="lists.removeTask(task, list)">remove</button>
-	  </div>    
+	  </div>
+	  <form ng-submit="lists.addTask(list)">
+	  	<input type="text" ng-model="lists.newTaskList.description" placeholde="Enter a new task..."/>
+	  	<input type="submit">
+	  </form>    
 	</div>
 
 	<form name="taskAdding" ng-submit="lists.addTaskList()" novalidate>
