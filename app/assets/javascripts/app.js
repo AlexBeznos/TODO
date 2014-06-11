@@ -4,24 +4,30 @@
   app.controller('TaskListCtrl', function(){
     this.taskLists = taskArr;
     this.newTaskList = {};
+    this.newTask = {};
+    
     this.addTaskList = function() {
       this.newTaskList.tasks = [];
       this.taskLists.push(this.newTaskList);
       this.newTaskList = {};
     };
+
     this.removeTaskList = function(list) {
        this.taskLists.splice(this.taskLists.indexOf(list), 1);
      };
+
     this.addTask - function(list) {
-      this.newTaskList.status = false;
-      this.taskLists[this.taskLists.indexOf[list]].tasks.push(this.newTaskList);
-      this.newTaskList = {};
+      this.newTask.status = false;
+      this.taskLists[this.taskLists.indexOf[list]].tasks.push(this.newTask);
+      this.newTask = {};
     };
+
     this.removeTask = function(task, list) {
       var listIndex = this.taskLists.indexOf(list);
       var taskIndex = this.taskLists[listIndex].tasks.indexOf(task);
       this.taskLists[listIndex].tasks.splice(taskIndex, 1);
     };
+
     this.check = function(task, list) {
       var listIndex = this.taskLists.indexOf(list);
       var taskIndex = this.taskLists[listIndex].tasks.indexOf(task);
