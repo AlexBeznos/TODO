@@ -4,7 +4,6 @@ module Api
     # GET /tasks.json
     def index
       @tasks = Task.all
-
       render json: @tasks
     end
 
@@ -12,7 +11,6 @@ module Api
     # GET /tasks/1.json
     def show
       @task = Task.find(params[:id])
-
       render json: @task
     end
 
@@ -48,5 +46,6 @@ module Api
 
       head :no_content
     end
+    
   end
 end
