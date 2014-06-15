@@ -1,21 +1,15 @@
 module Api
   class TasksController < ApplicationController
-    # GET /tasks
-    # GET /tasks.json
     def index
       @tasks = Task.all
       render json: @tasks
     end
 
-    # GET /tasks/1
-    # GET /tasks/1.json
     def show
       @task = Task.find(params[:id])
       render json: @task
     end
 
-    # POST /tasks
-    # POST /tasks.json
     def create
       @task = Task.new(params[:task])
 
@@ -26,8 +20,6 @@ module Api
       end
     end
 
-    # PATCH/PUT /tasks/1
-    # PATCH/PUT /tasks/1.json
     def update
       @task = Task.find(params[:id])
 
@@ -38,8 +30,6 @@ module Api
       end
     end
 
-    # DELETE /tasks/1
-    # DELETE /tasks/1.json
     def destroy
       @task = Task.find(params[:id])
       @task.destroy

@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe TaskList do
-  let(:list) { TaskList.create() }
-  
-  it "Name shoulde be presente" do
-  	list.should be_valid
+  it "should validate presence of name" do
+    TaskList.new(name: "").should_not be_valid
   end
 end

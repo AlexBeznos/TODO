@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-desribe TaskListController do 
-  it "shoudl validate presence of name" do
-    task_list = TaskList.new()
-    task_list.should be_valid
-  end
+describe Api::TaskListsController do
+  it "get task_lists index and return json" do
+  	get :index
+  	response.content_type.should == "application/json"
+	end
 end

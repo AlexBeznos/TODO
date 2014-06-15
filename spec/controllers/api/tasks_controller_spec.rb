@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe "TasksController" do
-  it "should put false status to new task" do
-    task = Task.new(description: "Some job")
-    task.save
-    task.status.should == false
-  end
+describe Api::TasksController do
+  it "get tasks index and return json" do
+  	get :index, :task_list_id => 1
+  	response.content_type.should == "application/json"
+	end
 end
