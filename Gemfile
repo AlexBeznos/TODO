@@ -29,6 +29,8 @@ gem 'spring',        group: :development
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'guard-rspec', require: false
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
