@@ -27,7 +27,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    angularjs-rails (1.2.16)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     capybara (2.2.1)
@@ -171,7 +170,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  angularjs-rails
   capybara
   coffee-rails (~> 4.0.0)
   guard-rspec
