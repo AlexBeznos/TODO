@@ -10,37 +10,28 @@ var app = Ember.Application.create({
 
 
 app.TaskListsController = Ember.ArrayController.extend({
-	siteName: "HGel"
+	siteName: "TODO:"
 });
+
 
 app.Router.map(function(){
-	this.resource('task_lists', {path:'/'});
+	this.resource('task_lists', {path: '/'});
+	this.resource('task_list', { path: '/task_list/:task_list_id' });
 });
 
+
 app.TaskListsRoute = Ember.Route.extend({
-	module: function(params) {
-		return this.store.find('task_lists', params.task_list_id);
+	model: function(params) {
+		return this.store.find('task_list');
 	}
 });
 
 DS.RESTAdapter.reopen({
-	namespace: "api"
+	namespace: 'api'
 });
 
-app.TaskLists = DS.Model.extend({
-	name: DS.attr('string'),
-	id: DS.attr('integer'),
-	created_at: DS.attr('string'),
-	updated_at: DS.attr('string')
+app.TaskList = DS.Model.extend({
+	name: DS.attr('string')
 });
 
-EmberTester.Store = DS.Store.extend({
-  revision: 11,
-  adapter: DS.RESTAdapter.create()
-});
 
-EmberTester.PostsRoute = Ember.Route.extend({
-  model: function() {
-    EmberTester.Post.find();
-  }
-});

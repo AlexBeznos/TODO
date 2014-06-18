@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'home/index'
   root 'home#index'
   namespace :api do
-    resources :task_lists do
+    resources :task_lists, :path => "taskLists" do
       resources :tasks
     end
   end

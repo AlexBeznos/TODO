@@ -4,8 +4,12 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="task_lists">
-	<p> Wowowwo it's works: {{siteName}}</p>
+	<p> Wowowwo its works: {{siteName}}</p>
 	{{#each }}
-	  {{name}}
+	  {{#link-to 'task_list' this}}{{name}}{{/link-to}}
 	{{/each}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="task_list">
+	  {{name}}
 </script>
