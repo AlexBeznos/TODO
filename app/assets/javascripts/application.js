@@ -21,10 +21,10 @@ app.TasksController = Ember.ArrayController.extend({
 
 app.TaskListsNewController = Ember.Controller.extend({
   actions: {
-    createRecord: function() {
+    createList: function() {
       var controller = this;
       this.get('model').save().then(function() {
-        controller.transitionToRoute('task_lists')
+        controller.transitionToRoute('task_lists');
       });
     }
   }
@@ -47,7 +47,7 @@ app.Router.map(function(){
 
 app.TaskListsNewRoute = Ember.Route.extend({
   model: function() {
-    return this.store.createRecord('task_list')
+    return this.store.createRecord('task_list');
   }
 });
 app.TaskListsRoute = Ember.Route.extend({
