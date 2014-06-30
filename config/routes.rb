@@ -2,9 +2,8 @@ Rails.application.routes.draw do
   get 'home/index'
   root 'home#index'
   namespace :api do
-    resources :task_lists, :path => "taskLists" do
-      resources :tasks
-    end
+    resources :task_lists, :path => "taskLists"
+    resources :tasks
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

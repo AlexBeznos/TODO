@@ -1,3 +1,4 @@
-class TaskListSerializer < ActiveModel::Serializer
+class TaskListSerializer < ApplicationSerializer
   attributes :id, :name
+  has_many :tasks
 end

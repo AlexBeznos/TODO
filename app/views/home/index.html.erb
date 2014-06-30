@@ -4,12 +4,25 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="task_lists">
-	<p> Wowowwo its works: {{siteName}}</p>
-	{{#each }}
-	  {{#link-to 'task_list' this}}{{name}}{{/link-to}}
-	{{/each}}
+  <p> Wowowwo its works: {{siteName}}</p>
+  {{#each }}
+    <p>{{#link-to 'task_list' this}}{{name}}{{/link-to}}</p>
+
+    {{ render 'tasks' this.task_ids}}
+  {{/each}}
 </script>
 
 <script type="text/x-handlebars" data-template-name="task_list">
-	  {{name}}
+  <p>{{name}}</p>
+  {{ render 'tasks' this.task_ids }}
 </script>
+
+<script type="text/x-handlebars" data-template-name="tasks">
+  <ul>
+    {{#each task in this}}
+  	  <li>{{#link-to 'task' task }}{{ task.description }}{{/link-to}}</li>
+  	{{/each}}
+  </ul>
+</script>
+
+ <script type="text/x-handlebars" data-template-name="task"> this is {{description}}</script>

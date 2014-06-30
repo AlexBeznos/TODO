@@ -199,7 +199,6 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
   ember-rails
-  ember-source
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails

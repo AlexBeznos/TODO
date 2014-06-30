@@ -1,3 +1,3 @@
-class TaskSerializer < ActiveModel::Serializer
-  attributes :id, :description, :status
+class TaskSerializer < ApplicationSerializer
+  attributes :id, :description, :status, :task_list_id
 end

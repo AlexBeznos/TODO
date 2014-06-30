@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'ember-rails'
-gem 'ember-source'
 gem 'active_model_serializers', :github => 'rails-api/active_model_serializers'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
