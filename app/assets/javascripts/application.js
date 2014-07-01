@@ -28,7 +28,9 @@ app.TaskListsNewController = Ember.Controller.extend({
         name: name
       });
       this.set('listName', '');
-      list.save();
+      list.save().then(function () {
+        controller.transitionToRoute('task_lists');
+      });
     }
   }
 });
