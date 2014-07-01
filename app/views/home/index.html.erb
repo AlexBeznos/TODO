@@ -3,6 +3,8 @@
   {{outlet}}
 </script>
 
+
+
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
   <p>{{#link-to 'task_lists.new'}}new record{{/link-to}}</p>
@@ -13,6 +15,8 @@
   {{/each}}
 </script>
 
+
+
 <script type="text/x-handlebars" data-template-name="task_lists/new">
   <form rol="newTaskListCreation">
     <p>{{view Ember.TextField valueBinding="listName" placeholder="Put your list name"}}</p>
@@ -20,17 +24,29 @@
   </form>
 </script>
 
+
+
 <script type="text/x-handlebars" data-template-name="task_list">
   <p>{{name}}</p>
   {{ render 'tasks' this.task_ids }}
+  <p>{{#link-to 'task_lists.newTask' this}}New task{{/link-to}}</p>
 </script>
+
+
 
 <script type="text/x-handlebars" data-template-name="tasks">
   <ul>
-    {{#each task in this}}
-  	  <li>{{#link-to 'task' task }}{{ task.description }}{{/link-to}}</li>
+    {{#each}}
+  	  <li>{{#link-to 'task' this }}{{ description }}{{/link-to}}</li>
   	{{/each}}
   </ul>
+  <form rel="newTaskCreation">
+    <p>{{view Ember.TextField valueBinding="taskName" placeholder="Your new task.."}}</p>
+    <button type="submit" {{action 'createTask'}}>Submit</button>
+  </form>
+  <button {{action 'createShit'}}>Hi</button>
 </script>
+
+
 
  <script type="text/x-handlebars" data-template-name="task"> this is {{description}}</script>

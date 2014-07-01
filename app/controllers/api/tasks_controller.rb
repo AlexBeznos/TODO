@@ -11,10 +11,10 @@ module Api
     end
 
     def create
-      @task = Task.new(params[:task])
+      @task = Task.new(task_params)
 
       if @task.save
-        render json: @task, status: :created, location: @task
+        render json: @task, status: :created
       else
         render json: @task.errors, status: :unprocessable_entity
       end
@@ -23,7 +23,7 @@ module Api
     def update
       @task = Task.find(params[:id])
 
-      if @task.update(params[:task])
+      if @task.update(task_params)
         head :no_content
       else
         render json: @task.errors, status: :unprocessable_entity
@@ -36,6 +36,9 @@ module Api
 
       head :no_content
     end
-    
+    private
+    def task_params
+      params.require(:task).permit(:description, :status, :task_list_id)
+    end
   end
 end

@@ -16,7 +16,22 @@ app.TaskListsController = Ember.ArrayController.extend({
 });
 
 app.TasksController = Ember.ArrayController.extend({
-  sortProperties: ['description']
+  sortProperties: ['description'],
+  actions: {
+    createTask: function() {
+      var controller = this;
+      var taskName = this.get('taskName');
+      var task = this.store.createRecord('task', {
+        description: taskName,
+        status: false,
+        task_list_id: this.store.getById('task_list', 1)
+      });
+      this.set('taskName', '');
+      task.save().then(function() {
+        controller.transitionToRoute('task_list')
+      });
+    }
+  }
 });
 
 app.TaskListsNewController = Ember.Controller.extend({
@@ -55,6 +70,13 @@ app.TaskListsNewRoute = Ember.Route.extend({
     return this.store.createRecord('task_list');
   }
 });
+
+app.TasksRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.createRecord('task');
+  }
+});
+
 app.TaskListsRoute = Ember.Route.extend({
   model: function() {
     return this.store.findAll('task_list');
@@ -62,7 +84,7 @@ app.TaskListsRoute = Ember.Route.extend({
 });
 
 
-app.TasksRoute = Ember.Route.extend({
+app.TaskRoute = Ember.Route.extend({
   afterModel: function() {
     this.set('task_list', this.modelFor('task_list'));
   }
