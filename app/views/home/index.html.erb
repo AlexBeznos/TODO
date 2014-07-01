@@ -15,7 +15,7 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists/new">
   <form rol="newTaskListCreation">
-    <p>{{view Ember.TextField valueBinding="model.name" placeholder="Put your list name"}}</p>
+    <p>{{view Ember.TextField valueBinding="listName" placeholder="Put your list name"}}</p>
     <button type="submit" {{action 'createList'}}>Submit</button>
   </form>
 </script>

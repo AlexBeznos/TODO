@@ -19,12 +19,12 @@ module Api
     # POST /task_lists
     # POST /task_lists.json
     def create
-      @task_list = TaskList.new(params[:task_list])
+      @task_list = TaskList.new(tl_params)
 
       if @task_list.save
-        render json: @task_list, status: :created, location: @task_list
+        render json: @task_list, status: :created
       else
-        render json: @task_list.errors, status: :unprocessable_entity
+         render json: @task_list.errors, status: :unprocessable_entity
       end
     end
 
@@ -33,7 +33,7 @@ module Api
     def update
       @task_list = TaskList.find(params[:id])
 
-      if @task_list.update(params[:task_list])
+      if @task_list.update(tl_params)
         head :no_content
       else
         render json: @task_list.errors, status: :unprocessable_entity
@@ -47,6 +47,11 @@ module Api
       @task_list.destroy
 
       head :no_content
+    end
+    
+    private
+    def tl_params
+      params.require(:taskList).permit(:name)
     end
   end
 end

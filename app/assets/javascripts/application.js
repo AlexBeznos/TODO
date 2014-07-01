@@ -23,9 +23,12 @@ app.TaskListsNewController = Ember.Controller.extend({
   actions: {
     createList: function() {
       var controller = this;
-      this.get('model').save().then(function() {
-        controller.transitionToRoute('task_lists');
+      var name = this.get('listName');
+      var list = this.store.createRecord('task_list', {
+        name: name
       });
+      this.set('listName', '');
+      list.save();
     }
   }
 });
@@ -86,3 +89,11 @@ DS.RESTAdapter.reopen({
   namespace: 'api'
 });
 
+
+// Verification token
+$(function() {
+    var token = $('meta[name="csrf-token"]').attr('content');
+    return $.ajaxPrefilter(function(options, originalOptions, xhr) {
+        return xhr.setRequestHeader('X-CSRF-Token', token);
+    });
+});
