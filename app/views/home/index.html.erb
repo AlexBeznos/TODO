@@ -9,7 +9,7 @@
   <p> Wowowwo its works: {{siteName}}</p>
   <p>{{#link-to 'task_lists.new'}}new record{{/link-to}}</p>
   {{outlet}}
-  {{#each }}
+  {{#each task_lists}}
     <p>{{#link-to 'task_list' this}}{{name}}{{/link-to}}</p>
     <ul>
       {{#each task in task_ids}}

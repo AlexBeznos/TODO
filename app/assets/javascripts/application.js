@@ -11,7 +11,7 @@ var app = Ember.Application.create({
 
 
 // Controller
-app.TaskListsController = Ember.ArrayController.extend({
+app.TaskListsController = Ember.ObjectController.extend({
   siteName: "TODO:"
 });
 
@@ -78,7 +78,10 @@ app.NewTaskRoute = Ember.Route.extend({
 
 app.TaskListsRoute = Ember.Route.extend({
   model: function() {
-    return this.store.findAll('task_list');
+    return Ember.RSVP.hash({
+      task_lists: this.store.findAll('task_list'),
+      tasks: this.store.findAll('task')
+    })
   }
 });
 
