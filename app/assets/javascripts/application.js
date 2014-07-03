@@ -15,16 +15,15 @@ app.TaskListsController = Ember.ArrayController.extend({
   siteName: "TODO:"
 });
 
-app.TasksController = Ember.ArrayController.extend({
-  sortProperties: ['description'],
+app.NewTaskController = Ember.ObjectController.extend({
   actions: {
     createTask: function() {
-      var controller = this;
+      var id = this.get('model').get('id');
       var taskName = this.get('taskName');
       var task = this.store.createRecord('task', {
         description: taskName,
         status: false,
-        task_list_id: this.store.getById('task_list', 1)
+        task_list_id: this.store.getById('task_list', id)
       });
       this.set('taskName', '');
       task.save().then(function() {
@@ -71,7 +70,7 @@ app.TaskListsNewRoute = Ember.Route.extend({
   }
 });
 
-app.TasksRoute = Ember.Route.extend({
+app.NewTaskRoute = Ember.Route.extend({
   model: function() {
     return this.store.createRecord('task');
   }

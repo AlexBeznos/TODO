@@ -11,7 +11,12 @@
   {{outlet}}
   {{#each }}
     <p>{{#link-to 'task_list' this}}{{name}}{{/link-to}}</p>
-    {{ render 'tasks' this.task_ids}}
+    <ul>
+      {{#each task in task_ids}}
+        <li>{{task.description}}</li>
+      {{/each}}
+      {{render 'newTask' this}}
+    </ul>
   {{/each}}
 </script>
 
@@ -34,17 +39,11 @@
 
 
 
-<script type="text/x-handlebars" data-template-name="tasks">
-  <ul>
-    {{#each}}
-  	  <li>{{#link-to 'task' this }}{{ description }}{{/link-to}}</li>
-  	{{/each}}
-  </ul>
+<script type="text/x-handlebars" data-template-name="newTask">
   <form rel="newTaskCreation">
     <p>{{view Ember.TextField valueBinding="taskName" placeholder="Your new task.."}}</p>
     <button type="submit" {{action 'createTask'}}>Submit</button>
   </form>
-  <button {{action 'createShit'}}>Hi</button>
 </script>
 
 
