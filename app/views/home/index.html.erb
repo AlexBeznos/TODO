@@ -24,18 +24,9 @@
   {{#each model.task_ids}}
     <li>{{description}}</li>
   {{/each}}
-  {{render 'tasks' }}
   {{render 'newTask' model}}
 </script>
 
-
-<script type="text/x-handlebars" data-template-name="tasks">
-hi
-{{some}}
-  {{#each tasksFilteredArray}}
-    <li>{{description}}</li>
-  {{/each}}
-</script>
 
 
 <script type="text/x-handlebars" data-template-name="task_lists/new">

@@ -12,12 +12,7 @@ var app = Ember.Application.create({
 
 // Controller
 app.TaskListsController = Ember.ArrayController.extend({
-  siteName: "TODO:",  
-  tasksFilteredArray: function() {
-    var filt = this.store.find('task_list').filterProperty('name', "Home tasks");
-    console.log(filt);
-    return filt;
-  }.property('@each.name')
+  siteName: "TODO:"
 });
 
 
@@ -65,8 +60,7 @@ app.Router.map(function(){
   this.resource('task_lists', { path: '/'}, function() {
     this.route('new')
   }),
-  this.resource('task_list', { path: ':task_list_id'}),
-  this.resource('task', { path: 'tasks/:task_id'})
+  this.resource('task_list', { path: ':task_list_id'})
 });
 
 
@@ -96,15 +90,6 @@ app.TaskListsRoute = Ember.Route.extend({
 app.TaskListRoute = Ember.Route.extend({
   model: function(params) {
     return  this.store.find('task_list', params.task_list_id)
-  }
-});
-
-app.TasksRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.find('task')
-  },
-  setupController: function(controller){
-    controller.set('some', "Hello world");
   }
 });
 
