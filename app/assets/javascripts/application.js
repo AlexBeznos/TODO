@@ -11,27 +11,37 @@ var app = Ember.Application.create({
 
 
 // Controller
-app.TaskListsController = Ember.ObjectController.extend({
-  siteName: "TODO:"
+app.TaskListsController = Ember.ArrayController.extend({
+  siteName: "TODO:",  
+  tasksFilteredArray: function() {
+    var filt = this.store.find('task_list').filterProperty('name', "Home tasks");
+    console.log(filt);
+    return filt;
+  }.property('@each.name')
 });
+
+
+app.TaskListController = Ember.Controller.extend({
+});
+
+
 
 app.NewTaskController = Ember.ObjectController.extend({
   actions: {
     createTask: function() {
       var id = this.get('model').get('id');
       var taskName = this.get('taskName');
-      var task = this.store.createRecord('task', {
+      var task_data = {
         description: taskName,
-        status: false,
         task_list_id: this.store.getById('task_list', id)
-      });
+      }
+      var task = this.store.createRecord('task', task_data);
       this.set('taskName', '');
-      task.save().then(function() {
-        controller.transitionToRoute('task_list')
-      });
+      task.save()
     }
   }
 });
+
 
 app.TaskListsNewController = Ember.Controller.extend({
   actions: {
@@ -55,7 +65,7 @@ app.Router.map(function(){
   this.resource('task_lists', { path: '/'}, function() {
     this.route('new')
   }),
-  this.resource('task_list', { path: 'task_list/:id'}),
+  this.resource('task_list', { path: ':task_list_id'}),
   this.resource('task', { path: 'tasks/:task_id'})
 });
 
@@ -70,6 +80,7 @@ app.TaskListsNewRoute = Ember.Route.extend({
   }
 });
 
+
 app.NewTaskRoute = Ember.Route.extend({
   model: function() {
     return this.store.createRecord('task');
@@ -78,10 +89,22 @@ app.NewTaskRoute = Ember.Route.extend({
 
 app.TaskListsRoute = Ember.Route.extend({
   model: function() {
-    return Ember.RSVP.hash({
-      task_lists: this.store.findAll('task_list'),
-      tasks: this.store.findAll('task')
-    })
+    return  this.store.find('task_list')
+  }
+});
+
+app.TaskListRoute = Ember.Route.extend({
+  model: function(params) {
+    return  this.store.find('task_list', params.task_list_id)
+  }
+});
+
+app.TasksRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('task')
+  },
+  setupController: function(controller){
+    controller.set('some', "Hello world");
   }
 });
 
