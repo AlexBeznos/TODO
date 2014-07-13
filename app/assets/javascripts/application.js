@@ -24,15 +24,16 @@ app.TaskListController = Ember.Controller.extend({
 app.NewTaskController = Ember.ObjectController.extend({
   actions: {
     createTask: function() {
-      var id = this.get('model').get('id');
-      var taskName = this.get('taskName');
-      var task_data = {
-        description: taskName,
-        task_list_id: this.store.getById('task_list', id)
-      }
-      var task = this.store.createRecord('task', task_data);
-      this.set('taskName', '');
-      task.save()
+      var id = this.get('model').get('id'),
+          controller = this,
+          task = this.store.createRecord('task', {
+            description: this.get('taskName'),
+            task_list_id: this.store.getById('task_list', id)
+          });
+      task.save().then(function(task) {
+        controller.set('taskName', '');
+        controller.get('model.task_ids').addObject(task);
+      });
     }
   }
 });
