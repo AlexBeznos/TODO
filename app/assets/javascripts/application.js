@@ -39,7 +39,7 @@ app.NewTaskController = Ember.ObjectController.extend({
 });
 
 
-app.TaskListsNewController = Ember.Controller.extend({
+app.NewTaskListController = Ember.Controller.extend({
   actions: {
     createList: function() {
       var controller = this;
@@ -58,29 +58,13 @@ app.TaskListsNewController = Ember.Controller.extend({
 
 // Router
 app.Router.map(function(){
-  this.resource('task_lists', { path: '/'}, function() {
-    this.route('new')
-  }),
-  this.resource('task_list', { path: ':task_list_id'})
+  this.resource('task_lists', { path: '/'})
 });
 
 
 
 
 // Routes
-
-app.TaskListsNewRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.createRecord('task_list');
-  }
-});
-
-
-app.NewTaskRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.createRecord('task');
-  }
-});
 
 app.TaskListsRoute = Ember.Route.extend({
   model: function() {

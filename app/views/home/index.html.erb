@@ -7,29 +7,22 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
-  <p>{{#link-to 'task_lists.new'}}new record{{/link-to}}</p>
-  {{outlet}}
+  {{render 'newTaskList'}}
   {{#each}}
     <div class="wrapper">
-      <p>{{#link-to 'task_list' this}}{{name}}{{/link-to}}</p>
+      <p>{{name}}</p>
+      <ul>
+        {{#each task_ids}}
+        <li>{{description}}</li>
+        {{/each}}
+        {{render 'newTask' this}}
+      </ul>
     </div>
   {{/each}}
-  {{#each tasksFilteredArray}}
-    <li>{{name}}</li>
-  {{/each}}
-</script>
-
-<script type="text/x-handlebars" data-template-name="task_list">
-  {{model.name}}
-  {{#each model.task_ids}}
-    <li>{{description}}</li>
-  {{/each}}
-  {{render 'newTask' model}}
 </script>
 
 
-
-<script type="text/x-handlebars" data-template-name="task_lists/new">
+<script type="text/x-handlebars" data-template-name="newTaskList">
   <form rol="newTaskListCreation">
     <p>{{view Ember.TextField valueBinding="listName" placeholder="Put your list name"}}</p>
     <button type="submit" {{action 'createList'}}>Submit</button>
