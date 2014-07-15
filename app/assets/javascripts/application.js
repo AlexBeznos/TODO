@@ -2,6 +2,7 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require twitter/bootstrap
 //= require_self
 
 var app = Ember.Application.create({
@@ -11,7 +12,12 @@ var app = Ember.Application.create({
 
 // Controller
 app.TaskListsController = Ember.ArrayController.extend({
-  siteName: "TODO:"
+  siteName: "TODO:",
+  actions: {
+    openTaskForm: function(name) {
+      $('p:contains("'+ name +'")').closest('.wrapper').find('form').toggle("slow");
+    }
+  }
 });
 
 

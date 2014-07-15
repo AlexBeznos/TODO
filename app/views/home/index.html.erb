@@ -7,7 +7,22 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
-  {{render 'newTaskList'}}
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#newTaskList">
+            Add new task list
+          </a>
+        </h4>
+      </div>
+      <div id="newTaskList" class="panel-collapse collapse">
+        <div class="panel-body">
+          {{render 'newTaskList'}}
+        </div>
+      </div>
+    </div>
+  </div>
   {{#each}}
     <div class="wrapper">
       <p>{{name}}</p>
@@ -15,6 +30,7 @@
         {{#each task_ids}}
         <li>{{description}}</li>
         {{/each}}
+        <button class="btn" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}
       </ul>
     </div>
@@ -31,7 +47,7 @@
 
 
 <script type="text/x-handlebars" data-template-name="newTask">
-  <form rel="newTaskCreation">
+  <form rel="newTaskCreation" class="taskForm">
     <p>{{input type="text" valueBinding="taskName" placeholder="Your new task.."}}</p>
     <button type="submit" {{action 'createTask'}}>Submit</button>
   </form>
