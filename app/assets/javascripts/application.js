@@ -9,7 +9,6 @@ var app = Ember.Application.create({
 });
 
 
-
 // Controller
 app.TaskListsController = Ember.ArrayController.extend({
   siteName: "TODO:"

@@ -24,7 +24,7 @@
 
 <script type="text/x-handlebars" data-template-name="newTaskList">
   <form rol="newTaskListCreation">
-    <p>{{view Ember.TextField valueBinding="listName" placeholder="Put your list name"}}</p>
+    <p>{{input type="text" valueBinding="listName" placeholder="Put your list name"}}</p>
     <button type="submit" {{action 'createList'}}>Submit</button>
   </form>
 </script>
@@ -32,7 +32,7 @@
 
 <script type="text/x-handlebars" data-template-name="newTask">
   <form rel="newTaskCreation">
-    <p>{{view Ember.TextField valueBinding="taskName" placeholder="Your new task.."}}</p>
+    <p>{{input type="text" valueBinding="taskName" placeholder="Your new task.."}}</p>
     <button type="submit" {{action 'createTask'}}>Submit</button>
   </form>
 </script>
