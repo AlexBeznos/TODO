@@ -2,7 +2,7 @@
 //= require handlebars
 //= require ember
 //= require ember-data
-//= require twitter/bootstrap
+//= require bootstrap-sprockets
 //= require_self
 
 var app = Ember.Application.create({
@@ -16,6 +16,17 @@ app.TaskListsController = Ember.ArrayController.extend({
   actions: {
     openTaskForm: function(name) {
       $('p:contains("'+ name +'")').closest('.wrapper').find('form').toggle("slow");
+    },
+    openTaskListForm: function() {
+      $('.taskListForm').toggle("slow")
+    },
+    deleteTaskList: function(task_list) {
+      task_list.deleteRecord();
+      task_list.save();
+    },
+    deleteTask: function(task) {
+      task.deleteRecord();
+      task.save();
     }
   }
 });

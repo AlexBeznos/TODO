@@ -7,28 +7,16 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a class="btn btn-warning" data-toggle="collapse" data-parent="#accordion" href="#newTaskList">
-            Add new task list
-          </a>
-        </h4>
-      </div>
-      <div id="newTaskList" class="panel-collapse collapse">
-        <div class="panel-body">
-          {{render 'newTaskList'}}
-        </div>
-      </div>
-    </div>
-  </div>
+      <a class="btn btn-warning" {{action "openTaskListForm"}}>
+        Add new task list
+      </a>
+  {{render 'newTaskList'}}
   {{#each}}
     <div class="wrapper">
-      <p>{{name}}</p>
+      <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
       <ul>
         {{#each task_ids}}
-        <li>{{description}}</li>
+        <li>{{description}}<a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a></li>
         {{/each}}
         <button class="btn" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}
@@ -39,7 +27,7 @@
 
 
 <script type="text/x-handlebars" data-template-name="newTaskList">
-  <form rol="newTaskListCreation">
+  <form rol="newTaskListCreation" class="taskListForm">
     <p>{{input type="text" valueBinding="listName" placeholder="Put your list name"}}</p>
     <button type="submit" {{action 'createList'}}>Submit</button>
   </form>
