@@ -16,7 +16,19 @@
       <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
       <ul>
         {{#each task_ids}}
-        <li>{{description}}<a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a></li>
+          {{#if status}}
+            <li class="crossed">
+              <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+              {{description}}
+              <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+          {{else}}
+            <li>
+              <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+              {{description}}
+              <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+          {{/if}}
         {{/each}}
         <button class="btn" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}

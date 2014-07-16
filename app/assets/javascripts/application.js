@@ -27,6 +27,10 @@ app.TaskListsController = Ember.ArrayController.extend({
     deleteTask: function(task) {
       task.deleteRecord();
       task.save();
+    },
+    select: function(task) {
+      task.get('status') == true ? task.set('status', false) : task.set('status', true);
+      task.save();
     }
   }
 });
