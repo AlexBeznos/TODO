@@ -1,8 +1,4 @@
 require File.expand_path('../boot', __FILE__)
-ActiveModel::Serializer.setup do |config|
-  config.embed = :ids
-  config.embed_in_root = true
-end
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

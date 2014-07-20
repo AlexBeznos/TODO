@@ -1,16 +1,41 @@
 <script type="text/x-handlebars" data-template-name="application">
-  <h1>HEllo world!</h1>
-  {{outlet}}
+  <div class="navbar-wrapper">
+    <div class="container">
+      <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            {{#link-to 'task_lists' class="navbar-brand"}}TODO:{{/link-to}}
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a class="btn" {{action "openTaskListForm"}}>
+                  <span class="glyphicon glyphicon-plus"></span>
+                </a>
+              </li>
+            </ul>
+            {{render 'newTaskList'}}
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+    <h1>HEllo world!</h1>
+    {{outlet}}
+  </div>
 </script>
 
 
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
-      <a class="btn btn-warning" {{action "openTaskListForm"}}>
-        Add new task list
-      </a>
-  {{render 'newTaskList'}}
   {{#each}}
     <div class="wrapper">
       <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
@@ -39,9 +64,11 @@
 
 
 <script type="text/x-handlebars" data-template-name="newTaskList">
-  <form rol="newTaskListCreation" class="taskListForm">
-    <p>{{input type="text" valueBinding="listName" placeholder="Put your list name"}}</p>
-    <button type="submit" {{action 'createList'}}>Submit</button>
+  <form rol="newTaskListCreation" class="taskListForm navbar-form navbar-right">
+    <div class="form-group">
+      {{input type="text" valueBinding="listName" class="form-control" placeholder="Put your list name"}}
+    </div>
+    <button type="submit" class="btn btn-default" {{action 'createList'}}>Submit</button>
   </form>
 </script>
 

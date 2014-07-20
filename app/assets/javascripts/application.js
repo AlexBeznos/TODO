@@ -17,20 +17,29 @@ app.TaskListsController = Ember.ArrayController.extend({
     openTaskForm: function(name) {
       $('p:contains("'+ name +'")').closest('.wrapper').find('form').toggle("slow");
     },
-    openTaskListForm: function() {
-      $('.taskListForm').toggle("slow")
-    },
     deleteTaskList: function(task_list) {
       task_list.deleteRecord();
       task_list.save();
     },
     deleteTask: function(task) {
+      var id = task.get('task_list_id').id,
+          obj = this.store.find('task_list', id);
       task.deleteRecord();
-      task.save();
+      task.save().then(function(tk) {
+        obj.get('task_ids').removeObject(tk);
+      });
     },
     select: function(task) {
       task.get('status') == true ? task.set('status', false) : task.set('status', true);
       task.save();
+    }
+  }
+});
+
+app.ApplicationController = Ember.Controller.extend({
+  actions: {
+     openTaskListForm: function() {
+      $('.taskListForm').toggle("slow")
     }
   }
 });
