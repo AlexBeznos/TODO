@@ -26,7 +26,7 @@
       </nav>
     </div>
   </div>
-
+  <div class="container">
     <h1>HEllo world!</h1>
     {{outlet}}
   </div>
@@ -36,30 +36,34 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <p> Wowowwo its works: {{siteName}}</p>
-  {{#each}}
-    <div class="wrapper">
-      <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
-      <ul>
-        {{#each task_ids}}
-          {{#if status}}
-            <li class="crossed">
-              <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-              {{description}}
-              <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
-            </li>
-          {{else}}
-            <li>
-              <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-              {{description}}
-              <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
-            </li>
-          {{/if}}
-        {{/each}}
-        <button class="btn" {{action "openTaskForm" name}}>New Task</button>
-        {{render 'newTask' this}}
-      </ul>
-    </div>
-  {{/each}}
+  <div class="row">
+    {{#each}}
+      <div class="clearfix col-xs-4">
+        <div class="wrapper">
+          <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
+          <ul>
+            {{#each task_ids}}
+              {{#if status}}
+                <li class="crossed">
+                  <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+                  {{description}}
+                  <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+                </li>
+              {{else}}
+                <li>
+                  <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+                  {{description}}
+                  <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+                </li>
+              {{/if}}
+            {{/each}}
+            <button class="btn" {{action "openTaskForm" name}}>New Task</button>
+            {{render 'newTask' this}}
+          </ul>
+        </div>
+      </div>
+    {{/each}}
+  </div>
 </script>
 
 
