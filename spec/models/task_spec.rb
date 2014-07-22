@@ -8,7 +8,9 @@ describe Task do
     task.status.should == false
   end
 
-  it "should validate presence of description" do
-  	Task.new(description: "").should_not be_valid
+  it "should put position to new task" do
+  	task = Task.new(description: "Hello")
+  	task.save
+  	task.position.should == 1
   end
 end

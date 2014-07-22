@@ -8,7 +8,7 @@ describe Api::TaskListsController do
   
   it "should have json with real data"	do
   	TaskList.create!(name: "Hello World")
-    visit 'api/task_lists'
+    visit 'api/taskLists'
   	page.should have_content "Hello World" 
   end
 end
