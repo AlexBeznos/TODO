@@ -9,8 +9,26 @@ var app = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+// View
+app.EditTaskView = Ember.TextField.extend({
+  didInsertElement: function() {
+    this.$().focus();
+  }
+});
+
+Ember.Handlebars.helper('edit-task', app.EditTaskView);
+
 
 // Controller
+app.ApplicationController = Ember.Controller.extend({
+  actions: {
+     openTaskListForm: function() {
+      $('.taskListForm').toggle("slow")
+    }
+  }
+});
+
+
 app.TaskListsController = Ember.ArrayController.extend({
   siteName: "TODO:",
   actions: {
@@ -36,18 +54,33 @@ app.TaskListsController = Ember.ArrayController.extend({
   }
 });
 
-app.ApplicationController = Ember.Controller.extend({
-  actions: {
-     openTaskListForm: function() {
-      $('.taskListForm').toggle("slow")
-    }
-  }
-});
-
 
 app.TasksController = Ember.ArrayController.extend({  
   sortProperties: ['position'],
   sortAscending: true
+});
+
+app.TaskController = Ember.ObjectController.extend({
+  actions: {
+    editTask: function() {
+      this.set('isEdit', true);
+    },
+    acceptChanges: function () {
+      this.set('isEdit', false);
+
+      if (Ember.isEmpty(this.get('model.description'))) {
+        this.send('removeTask');
+      } else {
+        this.get('model').save();
+      }
+    },
+    removeTask: function () {
+      var todo = this.get('model');
+      todo.deleteRecord();
+      todo.save();
+    }
+  },
+  isEdit: false
 });
 
 
@@ -87,6 +120,21 @@ app.NewTaskListController = Ember.Controller.extend({
 });
 
 
+// Model
+
+app.TaskList = DS.Model.extend({
+  name: DS.attr(),
+  task_ids: DS.hasMany('task', {async: true})
+});
+
+app.Task = DS.Model.extend({
+  description: DS.attr(),
+  status: DS.attr('boolean'),
+  position: DS.attr('number'),
+  task_list_id: DS.belongsTo('taskList')
+});
+
+
 // Router
 app.Router.map(function(){
   this.resource('task_lists', { path: '/'})
@@ -114,23 +162,6 @@ app.TaskRoute = Ember.Route.extend({
   afterModel: function() {
     this.set('task_list', this.modelFor('task_list'));
   }
-});
-
-
-
-
-// Model
-
-app.TaskList = DS.Model.extend({
-  name: DS.attr(),
-  task_ids: DS.hasMany('task', {async: true})
-});
-
-app.Task = DS.Model.extend({
-  description: DS.attr(),
-  status: DS.attr('boolean'),
-  position: DS.attr('number'),
-  task_list_id: DS.belongsTo('taskList')
 });
 
 
