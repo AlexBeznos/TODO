@@ -45,7 +45,7 @@ app.ApplicationController = Ember.Controller.extend({
 });
 
 
-app.TaskListController = Ember.Controller.extend({
+app.TasksController = Ember.ArrayController.extend({
 });
 
 

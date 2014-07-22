@@ -38,31 +38,34 @@
     {{#each}}
       <div class="wrapper clearfix col-xs-12 col-sm-4 col-md-3">
         <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove"></span></a></p>
-        <ul>
-          {{#each task_ids}}
-            {{#if status}}
-              <li class="crossed">
-                <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-                {{description}}
-                <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
-              </li>
-            {{else}}
-              <li>
-                <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-                {{description}}
-                <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
-              </li>
-            {{/if}}
-          {{/each}}
-          <button class="btn openTask" {{action "openTaskForm" name}}>New Task</button>
-          
-        </ul>
+        {{render 'tasks' task_ids}}
+        <button class="center-block btn btn-primary openTask" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}
       </div>
     {{/each}}
   </div>
 </script>
 
+
+<script type="text/x-handlebars" data-template-name="tasks">
+  <ul>
+    {{#each}}
+      {{#if status}}
+        <li class="crossed">
+          <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+          {{description}}
+          <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+        </li>
+      {{else}}
+        <li>
+          <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
+          {{description}}
+          <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
+        </li>
+      {{/if}}
+    {{/each}}
+  </ul>
+</script>
 
 <script type="text/x-handlebars" data-template-name="newTaskList">
   <form rol="newTaskListCreation" class="taskListForm navbar-form navbar-right">
@@ -75,8 +78,10 @@
 
 
 <script type="text/x-handlebars" data-template-name="newTask">
-  <form rel="newTaskCreation" class="taskForm">
-    <p>{{input type="text" valueBinding="taskName" placeholder="Your new task.."}}</p>
-    <button type="submit" {{action 'createTask'}}>Submit</button>
+  <form rel="newTaskCreation" class="taskForm form-inline">
+    <div class="form-group center-block">
+      {{input type="text" valueBinding="taskName" placeholder="Your new task.."}}
+      <button type="submit" {{action 'createTask'}} class="btn btn-success">Submit</button>
+    </div>
   </form>
 </script>
