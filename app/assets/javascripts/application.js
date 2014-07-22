@@ -45,7 +45,9 @@ app.ApplicationController = Ember.Controller.extend({
 });
 
 
-app.TasksController = Ember.ArrayController.extend({
+app.TasksController = Ember.ArrayController.extend({  
+  sortProperties: ['position'],
+  sortAscending: true
 });
 
 
@@ -120,13 +122,14 @@ app.TaskRoute = Ember.Route.extend({
 // Model
 
 app.TaskList = DS.Model.extend({
-  name: DS.attr('string'),
+  name: DS.attr(),
   task_ids: DS.hasMany('task', {async: true})
 });
 
 app.Task = DS.Model.extend({
-  description: DS.attr('string'),
+  description: DS.attr(),
   status: DS.attr('boolean'),
+  position: DS.attr('number'),
   task_list_id: DS.belongsTo('taskList')
 });
 

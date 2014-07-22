@@ -53,13 +53,13 @@
       {{#if status}}
         <li class="crossed">
           <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-          {{description}}
+          {{position}}. {{description}}
           <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
         </li>
       {{else}}
         <li>
           <a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a>
-          {{description}}
+          {{position}}. {{description}}
           <a {{action "deleteTask" this}}><span class="glyphicon glyphicon-remove"></span></a>
         </li>
       {{/if}}
