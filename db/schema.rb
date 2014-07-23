@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20140722012016) do
 
   create_table "tasks", force: true do |t|
     t.string   "description"
-    t.boolean  "status"
+    t.boolean  "status",       default: false
     t.integer  "task_list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
