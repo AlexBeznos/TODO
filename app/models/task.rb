@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
   before_create :set_status
-  before_update :add_position
+  before_update 
   scope :position, lambda {|pos| where(:position => pos)}
  # validates :description, presence: true
 
@@ -11,9 +11,11 @@ class Task < ActiveRecord::Base
 	end
 
 	def add_position
-    puts "booooooo"
-    puts self.position
-    puts "booooooo"
+    pos = 0;
+    Task.where(task_list_id: self.task_list_id).each do |task|
+      pos = task.position if task.position > pos
+    end
+    pos += 1
+    self.position = pos
   end
-  
 end
