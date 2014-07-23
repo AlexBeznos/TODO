@@ -22,7 +22,6 @@ module Api
 
     def update
       @task = Task.find(params[:id])
-
       if @task.update(task_params)
         head :no_content
       else

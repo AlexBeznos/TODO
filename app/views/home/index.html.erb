@@ -35,9 +35,15 @@
 
 <script type="text/x-handlebars" data-template-name="task_lists">
   <div class="row">
-    {{#each}}
+    {{#each itemController="taskList"}}
       <div class="wrapper clearfix col-xs-12 col-sm-4 col-md-3">
-        <p>{{name}} <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
+        <p>
+          {{#if isListEditing}}
+            {{edit-task class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
+          {{else}}
+            <span {{action "editTask" on="doubleClick"}}>{{name}}</span>
+          {{/if}}
+          <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
         {{render 'tasks' task_ids}}
         <button class="center-block btn btn-primary openTask" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}
@@ -49,10 +55,16 @@
 
 <script type="text/x-handlebars" data-template-name="tasks">
   <table class="table table-hover">
-    {{#each itemController="task"}}
+    {{#each arrangedContent itemController="task"}}
       <tr>
         <td><a {{action "select" this}}><span class="glyphicon glyphicon-ok"></span></a></td>
-        <td>{{position}}</td>
+        <td>
+          {{#if isPositionEdit}}
+            {{edit-task class="editPosition" value=position focus-out="acceptPosChanges" insert-newline="acceptPosChanges"}}
+          {{else}}
+            <span class="label label-success" {{action 'editPosition' on="doubleClick"}}>{{position}}</span>
+          {{/if}}
+        </td>
         <td {{bind-attr class="status:crossed"}}>
           {{#if isEdit}}
             {{edit-task class="edit" value=description focus-out="acceptChanges" insert-newline="acceptChanges"}}

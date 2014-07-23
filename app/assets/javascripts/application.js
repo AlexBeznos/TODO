@@ -54,6 +54,30 @@ app.TaskListsController = Ember.ArrayController.extend({
   }
 });
 
+app.TaskListController = Ember.ObjectController.extend({
+  isListEditing: false,
+  actions: {
+  //copy-past from task
+    editTask: function() {
+      this.set('isListEditing', true);
+    },
+    acceptChanges: function () {
+      this.set('isListEditing', false);
+
+      if (Ember.isEmpty(this.get('model.name'))) {
+        this.send('removeTask');
+      } else {
+        this.get('model').save();
+      }
+    },
+    removeTask: function () {
+      var todo = this.get('model');
+      todo.deleteRecord();
+      todo.save();
+    }    
+  }
+});
+
 
 app.TasksController = Ember.ArrayController.extend({  
   sortProperties: ['position'],
@@ -65,6 +89,18 @@ app.TaskController = Ember.ObjectController.extend({
     editTask: function() {
       this.set('isEdit', true);
     },
+    editPosition: function() {
+      this.set('isPositionEdit', true);
+    },
+    acceptPosChanges: function () {
+      this.set('isPositionEdit', false);
+
+      if (Ember.isEmpty(this.get('model.position'))) {
+        
+      } else {
+        this.get('model').save();
+      }
+    },
     acceptChanges: function () {
       this.set('isEdit', false);
 
@@ -75,12 +111,16 @@ app.TaskController = Ember.ObjectController.extend({
       }
     },
     removeTask: function () {
-      var todo = this.get('model');
-      todo.deleteRecord();
-      todo.save();
+      this.removeTask();
     }
   },
-  isEdit: false
+  isEdit: false,
+  isPositionEdit: false,
+  removeTask: function() {
+    var todo = this.get('model');
+    todo.deleteRecord();
+    todo.save();
+  }
 });
 
 
