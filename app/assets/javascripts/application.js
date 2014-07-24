@@ -146,16 +146,18 @@ app.NewTaskListController = Ember.Controller.extend({
   appAlias: Ember.computed.alias("controllers.application"),
   actions: {
     createList: function() {
-      var controller = this;
-      var name = this.get('listName');
-      var list = this.store.createRecord('task_list', {
-        name: name
-      });
-      this.set('listName', '');
-      list.save().then(function () {
-        controller.transitionToRoute('task_lists');
-        controller.get('appAlias').set('isFormOpened', false);
-      });
+      var controller = this,
+          name = this.get('listName');
+      if (!Ember.isEmpty(name)){
+        var list = this.store.createRecord('task_list', {
+          name: name
+        });
+        this.set('listName', '');
+        list.save().then(function () {
+          controller.transitionToRoute('task_lists');
+          controller.get('appAlias').set('isFormOpened', false);
+        });
+      }
     }
   }
 });
