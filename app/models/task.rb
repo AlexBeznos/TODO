@@ -1,7 +1,6 @@
 class Task < ActiveRecord::Base
   before_create :add_position
-  scope :position, lambda {|pos| where(:position => pos)}
- # validates :description, presence: true
+  validates :description, :presence => true
 
   protected
 
