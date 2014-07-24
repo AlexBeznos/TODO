@@ -20,7 +20,9 @@
                 </a>
               </li>
             </ul>
-            {{render 'newTaskList'}}
+            {{#if isFormOpened}}
+              {{render 'newTaskList'}}
+            {{/if}}
           </div>
         </div>
       </nav>
@@ -41,11 +43,10 @@
           {{#if isListEditing}}
             {{edit-task class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
           {{else}}
-            <span {{action "editTask" on="doubleClick"}}>{{name}}</span>
+            <span {{action "editTask" on="doubleClick"}}><strong>{{name}}</strong></span>
           {{/if}}
           <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
         {{render 'tasks' task_ids}}
-        <button class="center-block btn btn-primary openTask" {{action "openTaskForm" name}}>New Task</button>
         {{render 'newTask' this}}
       </div>
     {{/each}}
@@ -83,16 +84,19 @@
     <div class="form-group">
       {{input type="text" valueBinding="listName" class="form-control" placeholder="Put your list name"}}
     </div>
-    <button type="submit" class="btn btn-default" {{action 'createList'}}>Submit</button>
+    <button type="submit" class="btn btn-success" {{action 'createList'}}>Submit</button>
   </form>
 </script>
 
 
 <script type="text/x-handlebars" data-template-name="newTask">
-  <form rel="newTaskCreation" class="taskForm form-inline">
-    <div class="form-group center-block">
-      {{input type="text" valueBinding="taskName" placeholder="Your new task.."}}
-      <button type="submit" {{action 'createTask'}} class="btn btn-success">Submit</button>
-    </div>
-  </form>
+  <button class="center-block btn btn-primary" {{action "openTaskForm"}}>New Task</button>
+  {{#if isFormOpened}}
+    <form rel="newTaskCreation" class="taskForm form-inline">
+      <div class="form-group">
+        {{input type="text" valueBinding="taskName" placeholder="Your new task.."}}
+        <button type="submit" {{action 'createTask'}} class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  {{/if}}
 </script>

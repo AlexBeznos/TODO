@@ -23,18 +23,15 @@ Ember.Handlebars.helper('edit-task', app.EditTaskView);
 app.ApplicationController = Ember.Controller.extend({
   actions: {
      openTaskListForm: function() {
-      $('.taskListForm').toggle("slow")
+      this.get('isFormOpened') ? this.set('isFormOpened', false) : this.set('isFormOpened', true);
     }
-  }
+  },
+  isFormOpened: false
 });
 
 
 app.TaskListsController = Ember.ArrayController.extend({
-  siteName: "TODO:",
   actions: {
-    openTaskForm: function(name) {
-      $('p:contains("'+ name +'")').closest('.wrapper').find('form').toggle("slow");
-    },
     deleteTaskList: function(task_list) {
       task_list.deleteRecord();
       task_list.save();
@@ -127,6 +124,9 @@ app.TaskController = Ember.ObjectController.extend({
 
 app.NewTaskController = Ember.ObjectController.extend({
   actions: {
+    openTaskForm: function() {
+      this.get('isFormOpened') ? this.set('isFormOpened', false) : this.set('isFormOpened', true);
+    },
     createTask: function() {
       var id = this.get('model').get('id'),
           controller = this,
@@ -137,13 +137,16 @@ app.NewTaskController = Ember.ObjectController.extend({
       task.save().then(function(task) {
         controller.set('taskName', '');
         controller.get('model.task_ids').addObject(task);
+        controller.set('isFormOpened', false);
       });
     }
-  }
+  },
+  isFormOpened: false
 });
 
 
 app.NewTaskListController = Ember.Controller.extend({
+  needs: 'application',
   actions: {
     createList: function() {
       var controller = this;
@@ -154,6 +157,7 @@ app.NewTaskListController = Ember.Controller.extend({
       this.set('listName', '');
       list.save().then(function () {
         controller.transitionToRoute('task_lists');
+        controller.controllerFor('application').set('isFormOpened', false);
       });
     }
   }
