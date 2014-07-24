@@ -32,10 +32,6 @@ app.ApplicationController = Ember.Controller.extend({
 
 app.TaskListsController = Ember.ArrayController.extend({
   actions: {
-    deleteTaskList: function(task_list) {
-      task_list.deleteRecord();
-      task_list.save();
-    },
     deleteTask: function(task) {
       var id = task.get('task_list_id').id,
           obj = this.store.find('task_list', id);
@@ -67,7 +63,7 @@ app.TaskListController = Ember.ObjectController.extend({
         this.get('model').save();
       }
     },
-    removeTask: function () {
+    removeTaskList: function () {
       var todo = this.get('model');
       todo.deleteRecord();
       todo.save();
@@ -147,6 +143,7 @@ app.NewTaskController = Ember.ObjectController.extend({
 
 app.NewTaskListController = Ember.Controller.extend({
   needs: 'application',
+  appAlias: Ember.computed.alias("controllers.application"),
   actions: {
     createList: function() {
       var controller = this;
@@ -157,7 +154,7 @@ app.NewTaskListController = Ember.Controller.extend({
       this.set('listName', '');
       list.save().then(function () {
         controller.transitionToRoute('task_lists');
-        controller.controllerFor('application').set('isFormOpened', false);
+        controller.get('appAlias').set('isFormOpened', false);
       });
     }
   }

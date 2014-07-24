@@ -45,7 +45,7 @@
           {{else}}
             <span {{action "editTask" on="doubleClick"}}><strong>{{name}}</strong></span>
           {{/if}}
-          <a {{action "deleteTaskList" this}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
+          <a {{action "removeTaskList"}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
         {{render 'tasks' task_ids}}
         {{render 'newTask' this}}
       </div>
@@ -66,7 +66,7 @@
             <span class="label label-success" {{action 'editPosition' on="doubleClick"}}>{{position}}</span>
           {{/if}}
         </td>
-        <td {{bind-attr class="status:crossed"}}>
+        <td class="task" {{bind-attr class="status:crossed"}}>
           {{#if isEdit}}
             {{edit-task class="edit" value=description focus-out="acceptChanges" insert-newline="acceptChanges"}}
           {{else}}
