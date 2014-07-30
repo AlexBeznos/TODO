@@ -31,6 +31,7 @@ app.ApplicationController = Ember.Controller.extend({
 
 app.SignInController = Ember.Controller.extend({
   alertMSG: false,
+  rememberMe: false,
   actions : {
     signIn: function() {
       var controller = this;
@@ -39,7 +40,8 @@ app.SignInController = Ember.Controller.extend({
           user:
           {
             email: this.get('email'),
-            password: this.get('password')
+            password: this.get('password'),
+            remember_me: this.get('rememberMe') ? 1 : 0
           }
         },
         function(data) {
@@ -49,7 +51,6 @@ app.SignInController = Ember.Controller.extend({
         },
         'json'
       ).fail(function(data) {
-        console.log(data);
         controller.set('alertMSG', data.responseJSON.error);
       });
     }
