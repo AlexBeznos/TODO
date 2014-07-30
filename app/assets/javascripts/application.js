@@ -29,6 +29,32 @@ app.ApplicationController = Ember.Controller.extend({
   isFormOpened: false
 });
 
+app.SignInController = Ember.Controller.extend({
+  alertMSG: false,
+  actions : {
+    signIn: function() {
+      var controller = this;
+      return Ember.$.post('/users/sign_in.json',
+        {
+          user:
+          {
+            email: this.get('email'),
+            password: this.get('password')
+          }
+        },
+        function(data) {
+          location.reload();
+          controller.transitionToRoute('task_lists');
+          controller.set('alertMSG', false);
+        },
+        'json'
+      ).fail(function(data) {
+        console.log(data);
+        controller.set('alertMSG', data.responseJSON.error);
+      });
+    }
+  }
+});
 
 app.TaskListsController = Ember.ArrayController.extend({
   actions: {
@@ -180,7 +206,9 @@ app.Task = DS.Model.extend({
 
 // Router
 app.Router.map(function(){
-  this.resource('task_lists', { path: '/'})
+  this.resource('task_lists', { path: '/'});
+  this.route('sign_in');
+  this.route('sign_out');
 });
 
 
