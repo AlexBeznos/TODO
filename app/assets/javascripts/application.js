@@ -60,7 +60,6 @@ app.SignInController = Ember.Controller.extend({
 });
 
 app.TaskListsController = Ember.ArrayController.extend({
-  signedIn: false,
   actions: {
     deleteTask: function(task) {
       var id = task.get('task_list_id').id,
@@ -73,6 +72,15 @@ app.TaskListsController = Ember.ArrayController.extend({
     select: function(task) {
       task.get('status') == true ? task.set('status', false) : task.set('status', true);
       task.save();
+    },
+    signOut: function() {
+      Ember.$.ajax({
+        url: '/users/sign_out',
+        type: 'DELETE',
+        success: function(result) {
+          location.reload();
+        }
+      });
     }
   }
 });
@@ -211,6 +219,7 @@ app.Task = DS.Model.extend({
 // Router
 app.Router.map(function(){
   this.resource('task_lists', { path: '/'});
+  this.route('sign_in');
 });
 
 
@@ -219,8 +228,27 @@ app.Router.map(function(){
 // Routes
 
 app.TaskListsRoute = Ember.Route.extend({
+  beforeModel: function() {
+    var route = this;
+    $.get( "isUser.json", function( data ) {
+      if(!data){
+        route.transitionTo('sign_in')
+      };
+    });
+  },
   model: function() {
     return  this.store.find('task_list')
+  }
+});
+
+app.SignInRoute = Ember.Route.extend({
+  beforeModel: function(transition) {
+    var route = this;
+    $.get( "isUser.json", function( data ) {
+      if(data){
+        route.transitionTo('task_lists')
+      };
+    });
   }
 });
 
