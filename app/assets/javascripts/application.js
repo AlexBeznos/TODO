@@ -23,7 +23,9 @@ Ember.Handlebars.helper('edit-task', app.EditTaskView);
 app.ApplicationController = Ember.Controller.extend({
   actions: {
      openTaskListForm: function() {
-      this.get('isFormOpened') ? this.set('isFormOpened', false) : this.set('isFormOpened', true);
+      if(this.get('currentPath') == 'task_lists') {
+        this.get('isFormOpened') ? this.set('isFormOpened', false) : this.set('isFormOpened', true)
+      };
     }
   },
   isFormOpened: false
