@@ -30,31 +30,34 @@
   </div>
   <div class="container main">
     {{outlet}}
-    <ol class="breadcrumb" style="margin-top: 6em">
-      <li>{{#link-to 'sign_in'}}Sign in{{/link-to}}</li>
-      <li><a href="#">Library</a></li>
-    </ol>
   </div>
 </script>
 
 
 
 <script type="text/x-handlebars" data-template-name="task_lists">
-  <div class="row">
-    {{#each itemController="taskList"}}
-      <div class="wrapper clearfix col-xs-12 col-sm-4 col-md-3">
-        <p>
-          {{#if isListEditing}}
-            {{edit-task class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
-          {{else}}
-            <span {{action "editTask" on="doubleClick"}}><strong>{{name}}</strong></span>
-          {{/if}}
-          <a {{action "removeTaskList"}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
-        {{render 'tasks' task_ids}}
-        {{render 'newTask' this}}
-      </div>
-    {{/each}}
-  </div>
+  {{#if signedIn}}
+    <div class="row">
+      {{#each itemController="taskList"}}
+        <div class="wrapper clearfix col-xs-12 col-sm-4 col-md-3">
+          <p>
+            {{#if isListEditing}}
+              {{edit-task class="edit" value=name focus-out="acceptChanges" insert-newline="acceptChanges"}}
+            {{else}}
+              <span {{action "editTask" on="doubleClick"}}><strong>{{name}}</strong></span>
+            {{/if}}
+            <a {{action "removeTaskList"}}><span class="glyphicon glyphicon-remove pull-right"></span></a></p>
+          {{render 'tasks' task_ids}}
+          {{render 'newTask' this}}
+        </div>
+      {{/each}}
+    </div>
+    <ol class="breadcrumb" style="margin-top: 6em">
+      <li><a {{action 'sign_out'}}>Sign out</a></li>
+    </ol>
+  {{else}}
+    {{render 'sign_in'}}
+  {{/if}}
 </script>
 
 

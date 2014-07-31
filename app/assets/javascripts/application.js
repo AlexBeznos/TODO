@@ -30,6 +30,8 @@ app.ApplicationController = Ember.Controller.extend({
 });
 
 app.SignInController = Ember.Controller.extend({
+  needs: 'task_lists',
+  listsAlias: Ember.computed.alias("controllers.task_lists"),
   alertMSG: false,
   rememberMe: false,
   actions : {
@@ -46,7 +48,7 @@ app.SignInController = Ember.Controller.extend({
         },
         function(data) {
           location.reload();
-          controller.transitionToRoute('task_lists');
+          controller.get('listsAlias').set('signedIn', true);
           controller.set('alertMSG', false);
         },
         'json'
@@ -58,6 +60,7 @@ app.SignInController = Ember.Controller.extend({
 });
 
 app.TaskListsController = Ember.ArrayController.extend({
+  signedIn: false,
   actions: {
     deleteTask: function(task) {
       var id = task.get('task_list_id').id,
@@ -208,8 +211,6 @@ app.Task = DS.Model.extend({
 // Router
 app.Router.map(function(){
   this.resource('task_lists', { path: '/'});
-  this.route('sign_in');
-  this.route('sign_out');
 });
 
 
