@@ -1,28 +1,21 @@
-== README
+== TODO manager
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple todo manager with tasks, task lists, priorities of tasks, statuses of tasks. 
 
-Things you may want to cover:
+Were used:
 
-* Ruby version
+* Rails
 
-* System dependencies
+* EmberJS
 
-* Configuration
+* jQuery
 
-* Database creation
+* Handlebars
 
-* Database initialization
+* Bootstrap
 
-* How to run the test suite
+* Devise
 
-* Services (job queues, cache servers, search engines, etc.)
+* Active Model Serializers
 
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+- I have used stupid trick on the backend for determination is user signed in or not. I have made one more action which render true or false depends on current_user existence. Please, don't do it in such way))
