@@ -18,4 +18,4 @@ Were used:
 
 * Active Model Serializers
 
-- I have used stupid trick on the backend for determination is user signed in or not. I have made one more action which render true or false depends on current_user existence. Please, don't do it in such way))
+++ I have used stupid trick on the backend for determination is user signed in or not. I have made one more action which render true or false depends on current_user existence. Please, don't do it in such way))
