@@ -2,7 +2,6 @@
 //= require handlebars
 //= require ember
 //= require ember-data
-
 //= require bootstrap-sprockets
 //= require_self
 
@@ -41,58 +40,6 @@ app.ApplicationController = Ember.Controller.extend({
   isFormOpened: false
 });
 
-app.SignInController = Ember.Controller.extend({
-  alertMSG: false,
-  rememberMe: false,
-  actions : {
-    signIn: function() {
-      var controller = this;
-      return Ember.$.post('/users/sign_in.json',
-        {
-          user:
-          {
-            email: this.get('email'),
-            password: this.get('password'),
-            remember_me: this.get('rememberMe') ? 1 : 0
-          }
-        },
-        function(data) {
-          location.reload();
-          controller.set('alertMSG', false);
-        },
-        'json'
-      ).fail(function(data) {
-        controller.set('alertMSG', data.responseJSON.error);
-      });
-    }
-  }
-});
-
-app.SignUpController = Ember.Controller.extend({
-  alertMSG: false,
-  actions : {
-    signUp: function() {
-      var controller = this;
-      return Ember.$.post('/users.json',
-        {
-          user:
-          {
-            email: this.get('email'),
-            password: this.get('password'),
-            password_confirmation: this.get('passwordConf')
-          }
-        },
-        function(data) {
-          location.reload();
-          controller.set('alertMSG', false);
-        },
-        'json'
-      ).fail(function(data) {
-        controller.set('alertMSG', data.responseJSON.error);
-      });
-    }
-  }
-});
 
 app.TaskListsController = Ember.ArrayController.extend({
   actions: {
@@ -230,6 +177,60 @@ app.NewTaskListController = Ember.Controller.extend({
 });
 
 
+app.SignInController = Ember.Controller.extend({
+  alertMSG: false,
+  rememberMe: false,
+  actions : {
+    signIn: function() {
+      var controller = this;
+      return Ember.$.post('/users/sign_in.json',
+        {
+          user:
+          {
+            email: this.get('email'),
+            password: this.get('password'),
+            remember_me: this.get('rememberMe') ? 1 : 0
+          }
+        },
+        function(data) {
+          location.reload();
+          controller.set('alertMSG', false);
+        },
+        'json'
+      ).fail(function(data) {
+        controller.set('alertMSG', data.responseJSON.error);
+      });
+    }
+  }
+});
+
+app.SignUpController = Ember.Controller.extend({
+  alertMSG: false,
+  actions : {
+    signUp: function() {
+      var controller = this;
+      return Ember.$.post('/users.json',
+        {
+          user:
+          {
+            email: this.get('email'),
+            password: this.get('password'),
+            password_confirmation: this.get('passwordConf')
+          }
+        },
+        function(data) {
+          location.reload();
+          controller.set('alertMSG', false);
+        },
+        'json'
+      ).fail(function(data) {
+        controller.set('alertMSG', data.responseJSON.error);
+      });
+    }
+  }
+});
+
+
 // Model
 
 app.TaskList = DS.Model.extend({
@@ -271,6 +272,21 @@ app.TaskListsRoute = Ember.Route.extend({
   }
 });
 
+
+app.TaskListRoute = Ember.Route.extend({
+  model: function(params) {
+    return  this.store.find('task_list', params.task_list_id)
+  }
+});
+
+
+app.TaskRoute = Ember.Route.extend({
+  afterModel: function() {
+    this.set('task_list', this.modelFor('task_list'));
+  }
+});
+
+
 app.SignInRoute = Ember.Route.extend({
   beforeModel: function(transition) {
     var route = this;
@@ -292,20 +308,6 @@ app.SignUpRoute = Ember.Route.extend({
     });
   }
 });
-
-app.TaskListRoute = Ember.Route.extend({
-  model: function(params) {
-    return  this.store.find('task_list', params.task_list_id)
-  }
-});
-
-
-app.TaskRoute = Ember.Route.extend({
-  afterModel: function() {
-    this.set('task_list', this.modelFor('task_list'));
-  }
-});
-
 
 
 // Adapter
