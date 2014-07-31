@@ -2,6 +2,7 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+
 //= require bootstrap-sprockets
 //= require_self
 
@@ -26,6 +27,15 @@ app.ApplicationController = Ember.Controller.extend({
       if(this.get('currentPath') == 'task_lists') {
         this.get('isFormOpened') ? this.set('isFormOpened', false) : this.set('isFormOpened', true)
       };
+    },
+    signOut: function() {
+      Ember.$.ajax({
+        url: '/users/sign_out',
+        type: 'DELETE',
+        success: function(result) {
+          location.reload();
+        }
+      });
     }
   },
   isFormOpened: false
@@ -98,15 +108,9 @@ app.TaskListsController = Ember.ArrayController.extend({
       task.get('status') == true ? task.set('status', false) : task.set('status', true);
       task.save();
     },
-    signOut: function() {
-      Ember.$.ajax({
-        url: '/users/sign_out',
-        type: 'DELETE',
-        success: function(result) {
-          location.reload();
-        }
-      });
-    }
+    createTaskList: function() {
+      this.controllerFor('application').send('openTaskListForm');
+   }
   }
 });
 
