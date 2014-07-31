@@ -32,8 +32,6 @@ app.ApplicationController = Ember.Controller.extend({
 });
 
 app.SignInController = Ember.Controller.extend({
-  needs: 'task_lists',
-  listsAlias: Ember.computed.alias("controllers.task_lists"),
   alertMSG: false,
   rememberMe: false,
   actions : {
@@ -50,7 +48,32 @@ app.SignInController = Ember.Controller.extend({
         },
         function(data) {
           location.reload();
-          controller.get('listsAlias').set('signedIn', true);
+          controller.set('alertMSG', false);
+        },
+        'json'
+      ).fail(function(data) {
+        controller.set('alertMSG', data.responseJSON.error);
+      });
+    }
+  }
+});
+
+app.SignUpController = Ember.Controller.extend({
+  alertMSG: false,
+  actions : {
+    signUp: function() {
+      var controller = this;
+      return Ember.$.post('/users.json',
+        {
+          user:
+          {
+            email: this.get('email'),
+            password: this.get('password'),
+            password_confirmation: this.get('passwordConf')
+          }
+        },
+        function(data) {
+          location.reload();
           controller.set('alertMSG', false);
         },
         'json'
@@ -222,6 +245,7 @@ app.Task = DS.Model.extend({
 app.Router.map(function(){
   this.resource('task_lists', { path: '/'});
   this.route('sign_in');
+  this.route('sign_up');
 });
 
 
@@ -244,6 +268,17 @@ app.TaskListsRoute = Ember.Route.extend({
 });
 
 app.SignInRoute = Ember.Route.extend({
+  beforeModel: function(transition) {
+    var route = this;
+    $.get( "isUser.json", function( data ) {
+      if(data){
+        route.transitionTo('task_lists')
+      };
+    });
+  }
+});
+
+app.SignUpRoute = Ember.Route.extend({
   beforeModel: function(transition) {
     var route = this;
     $.get( "isUser.json", function( data ) {
